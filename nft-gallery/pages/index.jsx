@@ -14,12 +14,13 @@ const Home = () => {
 		console.log("fetching nfts");
 		// console.log("nfts", nfts);
 		// if the collection address is not empty then fetch the nfts from the collection address else fetch the nfts from the wallet address
+		const api_key = "jwB4CGIt608IVkdFaxexVT4lYRoX29Bs";
+		const baseURL = `https://eth-mainnet.alchemyapi.io/v2/${api_key}/getNFTs/`; // specify the base url of the api
 		if (!collection.length) {
 			var requestOptions = {
 				method: "GET",
 			};
-			const api_key = "jwB4CGIt608IVkdFaxexVT4lYRoX29Bs";
-			const baseURL = `https://eth-mainnet.alchemyapi.io/v2/${api_key}/getNFTs/`; // specify the base url of the api
+
 			// const ownerAddr = "0xfae46f94ee7b2acb497cecaff6cff17f621c693d";
 			const fetchURL = `${baseURL}?owner=${wallet}`; // specify the url of the api
 
@@ -27,6 +28,11 @@ const Home = () => {
 				response.json()
 			);
 		} else {
+			console.log("fetching nfts from collection owned by address");
+			const fetchURL = `${baseURL}?owner=${wallet}&contractAddresses%5B%5D=${collection}`;
+			nfts = await fetch(fetchURL, requestOptions).then((response) =>
+				response.json()
+			);
 		}
 
 		if (("nfts", nfts)) {
