@@ -93,7 +93,13 @@ const Home = () => {
 					/>
 					<button
 						onClick={() => {
-							fetchNFTs();
+							if (fetchForCollection) {
+								// if the fetchForCollection variable is true then fetch the nfts for the collection
+								fetchNFTsForCollection(); // fetch the nfts for the collection
+							} else {
+								// if the fetchForCollection variable is false then fetch the nfts for the wallet
+								fetchNFTs(); // fetch the nfts for the wallet
+							}
 						}}
 					>
 						Let,s go
