@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
+import { NFTCard } from "../components/nftCard";
 
 const Home = () => {
 	const [wallet, setWalletAddress] = useState(""); // specify the initial state of the wallet variable is a string and set it to an empty string
@@ -109,6 +110,13 @@ const Home = () => {
 						Let,s go
 					</button>
 				</label>
+			</div>
+			<div>
+				{NFTS.length &&
+					NFTS.map((nft) => {
+						console.log("nft", nft);
+						return <NFTCard varibles={nft} />;
+					})}
 			</div>
 		</div>
 	);
