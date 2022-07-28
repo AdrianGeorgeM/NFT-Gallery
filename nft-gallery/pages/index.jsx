@@ -49,15 +49,19 @@ const Home = () => {
 	//fetch all of out nfts and retrieve also the metadata
 	const fetchNFTsForCollection = async () => {
 		if (collection.length) {
+			var requestOptions = {
+				method: "GET",
+			};
 			const api_key = "jwB4CGIt608IVkdFaxexVT4lYRoX29Bs";
-			const baseURL = `https://eth-mainnet.alchemyapi.io/v2/${api_key}/getNFTs/`; // specify the base url of the api
+			const baseURL = `https://eth-mainnet.alchemyapi.io/v2/${api_key}/getNFTsForCollection/`; // specify the base url of the api
 			const fetchURL = `${baseURL}?contractAddress=${collection}&withMetadata=${"true"}`; // specify the url of the api
-			nfts = await fetch(fetchURL, requestOptions).then((response) =>
+			const nfts = await fetch(fetchURL, requestOptions).then((response) =>
 				response.json()
 			);
 			if (nfts) {
 				// if the nfts are not empty then set the state of the nfts to the fetched nfts
 				console.log("NFTS in collection:", nfts); // log the nfts
+				setNFTs(nfts.nfts); //filter the nfts to only show the ones that are owned by the wallet
 			}
 		}
 	};
@@ -83,7 +87,6 @@ const Home = () => {
 					address
 				/>
 				<label>
-					Fetch for collection
 					<input
 						onChange={(e) => {
 							setFetchForCollection(e.target.checked); // set the value of the wallet variable to the value of the input
@@ -91,6 +94,7 @@ const Home = () => {
 						type={"checkbox"}
 						placeholder='Search'
 					/>
+					Fetch for collection
 					<button
 						onClick={() => {
 							if (fetchForCollection) {
